@@ -274,9 +274,9 @@ function SetSelected(anSelectedArr)
 	end
 end
 
-function CalcShift(aXShift, aYShift)
+function CalcShift(aXShift, aYShift, anAddonsPerColumn)
 	aYShift = aYShift + 1 
-	if aYShift == 36 then
+	if aYShift == anAddonsPerColumn then
 		aXShift = aXShift + 230
 		aYShift = 0
 	end
@@ -284,16 +284,17 @@ function CalcShift(aXShift, aYShift)
 end
 
 function CreateAddonChexbox(aForm, aName, aXShift, aYShift)
-	setLocaleText(createWidget(aForm, aName, "TextView", nil, nil, 200, 15, 40+aXShift, 150+aYShift*20), 10)
+	local checkBoxTxt = createWidget(aForm, aName, "TextView", nil, nil, 200, 15, 30+aXShift, 10+aYShift*20)
+	setLocaleText(checkBoxTxt, 10)
 	local nameOfCheckBox = aName.."_checkbox"
-	local currCheckBox = createWidget(aForm, nameOfCheckBox, "CheckBox", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 15, 15, 22+aXShift, 150+aYShift*20)
+	local currCheckBox = createWidget(aForm, nameOfCheckBox, "CheckBox", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 15, 15, 12+aXShift, 10+aYShift*20)
 	m_createdCheckBoxes[aName] = currCheckBox
 	setCheckBox(currCheckBox, false)
 end
 
 function InitConfigForm()
 	setTemplateWidget(m_template)
-	local formWidth = 1366
+	local formWidth = 1200
 	local form=createWidget(mainForm, "ConfigForm", "Panel", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, formWidth, 900, 0, 60)
 	priority(form, 5500)
 	hide(form)
@@ -303,13 +304,13 @@ function InitConfigForm()
 	table.sort(addons, CompareByString) --sorting with [1] position
 	
 	local btnWidth = 220
-	local setBtnPos = formWidth/2-btnWidth/2-150
+	local setBtnPos = formWidth/2-btnWidth/2
 	
 	setLocaleText(createWidget(form, "minimalButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 35))
 	setLocaleText(createWidget(form, "mediumButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 65))
 	setLocaleText(createWidget(form, "allButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 95))
 	
-	setLocaleText(createWidget(form, "gameOptions", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 240, 25, setBtnPos+300, 65))
+	--setLocaleText(createWidget(form, "gameOptions", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 240, 25, setBtnPos+300, 65))
 
 
 	setLocaleText(createWidget(form, "saveButton1", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 140, 25, 90, 872))
@@ -319,9 +320,14 @@ function InitConfigForm()
 	setLocaleTextWithColor(createWidget(form, "header", "TextView", nil, nil, 600, 25, formWidth/2-300, 124), "ColorYellow")
 	m_setHeaderWidget = createWidget(form, "saveheader", "TextView", nil, nil, 600, 25, formWidth/2-50, 10)
 
+	local addonsPerColumn = math.floor(GetTableSize( addons )/5)
+	local scroll = createWidget(form, "container", "ScrollableContainer", nil, nil, formWidth, 720, 4, 144)
+	local panel = createWidget(form, "group1", "Panel", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, formWidth-50, addonsPerColumn*20+20, 0, 0)
+	scroll:PushBack(panel)
 	--local str = ""
 	local xShift = 0
 	local yShift = 0
+	
 	for i = 1, GetTableSize( addons ) - 1 do
 		local info = addons[i]
 		if not string.find(info.name, "FpsIncrease") 
@@ -329,10 +335,10 @@ function InitConfigForm()
 		and not string.find(info.name, "SpectatorTools")
 		or info.name == "UserAddonManager"
 		then
-			CreateAddonChexbox(form, info.name, xShift, yShift)
+			CreateAddonChexbox(panel, info.name, xShift, yShift)
 			--str = str.."Locales[\"rus\"][\""..info.name.."\"]=\"texttext\"\n"	
 			--str = str..", \n".."\""..info.name.."\""
-			xShift, yShift = CalcShift(xShift, yShift)
+			xShift, yShift = CalcShift(xShift, yShift, addonsPerColumn)
 		end
 	end
 	-- add useraddons to the end
@@ -342,14 +348,14 @@ function InitConfigForm()
 		and string.find(info.name, "UserAddon") 
 		and info.name ~= "UserAddonManager"
 		then
-			CreateAddonChexbox(form, info.name, xShift, yShift)		
-			xShift, yShift = CalcShift(xShift, yShift)
+			CreateAddonChexbox(panel, info.name, xShift, yShift)		
+			xShift, yShift = CalcShift(xShift, yShift, addonsPerColumn)
 		end
 	end
 	--LogInfo(str)
 
-	setLocaleText(createWidget(form, "selectAll", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 160, 25, 1200, 872))
-	setLocaleText(createWidget(form, "deseletAll", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 160, 25, 1030, 872))
+	setLocaleText(createWidget(form, "selectAll", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 160, 25, 20, 872))
+	setLocaleText(createWidget(form, "deseletAll", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 160, 25, 190, 872))
 	
 	setText(createWidget(form, "closeBarsButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 20, 20, 20, 20), "x")
 	DnD:Init(form, form, true)
