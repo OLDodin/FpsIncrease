@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UIRelatedTexts>
+  <items>
+    <Item>
+      <name>FPSIncrease</name>
+      <resource href="FPSIncrease.txt"/>
+    </Item>
+    <Item>
+      <name>minimalButton</name>
+      <resource href="minimalButton.txt"/>
+    </Item>
+    <Item>
+      <name>mediumButton</name>
+      <resource href="mediumButton.txt"/>
+    </Item>
+    <Item>
+      <name>allButton</name>
+      <resource href="allButton.txt"/>
+    </Item>
+    <Item>
+      <name>loadButton</name>
+      <resource href="loadButton.txt"/>
+    </Item>
+    <Item>
+      <name>saveButton</name>
+      <resource href="saveButton.txt"/>
+    </Item>
+    <Item>
+      <name>header</name>
+      <resource href="header.txt"/>
+    </Item>
+    <Item>
+      <name>saveheader</name>
+      <resource href="saveheader.txt"/>
+    </Item>
+    <Item>
+      <name>gameOptions</name>
+      <resource href="gameOptions.txt"/>
+    </Item>
+    <Item>
+      <name>selectAll</name>
+      <resource href="selectAll.txt"/>
+    </Item>
+    <Item>
+      <name>deseletAll</name>
+      <resource href="deseletAll.txt"/>
+    </Item>
+    <Item>
+      <name>loadButton1</name>
+      <resource href="loadButton1.txt"/>
+    </Item>
+    <Item>
+      <name>saveButton1</name>
+      <resource href="saveButton1.txt"/>
+    </Item>
+    <Item>
+      <name>loadButton2</name>
+      <resource href="loadButton2.txt"/>
+    </Item>
+    <Item>
+      <name>saveButton2</name>
+      <resource href="saveButton2.txt"/>
+    </Item>
+    <Item>
+      <name>loadButton3</name>
+      <resource href="loadButton3.txt"/>
+    </Item>
+    <Item>
+      <name>saveButton3</name>
+      <resource href="saveButton3.txt"/>
+    </Item>
+    <Item>
+      <name>setName</name>
+      <resource href="setName.txt"/>
+    </Item>
+    <Item>
+      <name>closeBarsButton2</name>
+      <resource href="closeBarsButton2.txt"/>
+    </Item>
+    <Item>
+      <name>rename</name>
+      <resource href="rename.txt"/>
+    </Item>
+    <Item>
+      <name>delete</name>
+      <resource href="delete.txt"/>
+    </Item>
+    <Item>
+      <name>update</name>
+      <resource href="update.txt"/>
+    </Item>
+  </items>
+</UIRelatedTexts>

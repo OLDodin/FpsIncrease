@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UIRelatedTexts>
+  <items>
+    <Item>
+      <name>FPSIncrease</name>
+      <resource href="FPSIncrease.txt"/>
+    </Item>
+    <Item>
+      <name>minimalButton</name>
+      <resource href="minimalButton.txt"/>
+    </Item>
+    <Item>
+      <name>mediumButton</name>
+      <resource href="mediumButton.txt"/>
+    </Item>
+    <Item>
+      <name>allButton</name>
+      <resource href="allButton.txt"/>
+    </Item>
+    <Item>
+      <name>loadButton</name>
+      <resource href="loadButton.txt"/>
+    </Item>
+    <Item>
+      <name>saveButton</name>
+      <resource href="saveButton.txt"/>
+    </Item>
+    <Item>
+      <name>header</name>
+      <resource href="header.txt"/>
+    </Item>
+    <Item>
+      <name>saveheader</name>
+      <resource href="saveheader.txt"/>
+    </Item>
+    <Item>
+      <name>gameOptions</name>
+      <resource href="gameOptions.txt"/>
+    </Item>
+    <Item>
+      <name>selectAll</name>
+      <resource href="selectAll.txt"/>
+    </Item>
+    <Item>
+      <name>deseletAll</name>
+      <resource href="deseletAll.txt"/>
+    </Item>
+    <Item>
+      <name>loadButton1</name>
+      <resource href="loadButton1.txt"/>
+    </Item>
+    <Item>
+      <name>saveButton1</name>
+      <resource href="saveButton1.txt"/>
+    </Item>
+    <Item>
+      <name>loadButton2</name>
+      <resource href="loadButton2.txt"/>
+    </Item>
+    <Item>
+      <name>saveButton2</name>
+      <resource href="saveButton2.txt"/>
+    </Item>
+    <Item>
+      <name>loadButton3</name>
+      <resource href="loadButton3.txt"/>
+    </Item>
+    <Item>
+      <name>saveButton3</name>
+      <resource href="saveButton3.txt"/>
+    </Item>
+    <Item>
+      <name>setName</name>
+      <resource href="setName.txt"/>
+    </Item>
+    <Item>
+      <name>closeBarsButton2</name>
+      <resource href="closeBarsButton2.txt"/>
+    </Item>
+    <Item>
+      <name>rename</name>
+      <resource href="rename.txt"/>
+    </Item>
+    <Item>
+      <name>delete</name>
+      <resource href="delete.txt"/>
+    </Item>
+    <Item>
+      <name>update</name>
+      <resource href="update.txt"/>
+    </Item>
+    <Item>
+      <name>AlchemyV2</name>
+      <resource href="AlchemyV2.txt"/>
+    </Item>
+    <Item>
+      <name>ArenaTimer</name>
+      <resource href="ArenaTimer.txt"/>
+    </Item>
+    <Item>
+      <name>AstralDamageAnnounce</name>
+      <resource href="AstralDamageAnnounce.txt"/>
+    </Item>
+    <Item>
+      <name>AstralEvents</name>
+      <resource href="AstralEvents.txt"/>
+    </Item>
+    <Item>
+      <name>AstralMap</name>
+      <resource href="AstralMap.txt"/>
+    </Item>
+    <Item>
+      <name>BattleGrounds</name>
+      <resource href="BattleGrounds.txt"/>
+    </Item>
+    <Item>
+      <name>BillingBonuses</name>
+      <resource href="BillingBonuses.txt"/>
+    </Item>
+    <Item>
+      <name>BonusPools</name>
+      <resource href="BonusPools.txt"/>
+    </Item>
+    <Item>
+      <name>BossPlate</name>
+      <resource href="BossPlate.txt"/>
+    </Item>
+    <Item>
+      <name>Buffs</name>
+      <resource href="Buffs.txt"/>
+    </Item>
+    <Item>
+      <name>BuffsAstral</name>
+      <resource href="BuffsAstral.txt"/>
+    </Item>
+    <Item>
+      <name>BugReport</name>
+      <resource href="BugReport.txt"/>
+    </Item>
+    <Item>
+      <name>Castbar</name>
+      <resource href="Castbar.txt"/>
+    </Item>
+    <Item>
+      <name>ChangeRoom</name>
+      <resource href="ChangeRoom.txt"/>
+    </Item>
+    <Item>
+      <name>ChatBubbles</name>
+      <resource href="ChatBubbles.txt"/>
+    </Item>
+    <Item>
+      <name>ChatInput</name>
+      <resource href="ChatInput.txt"/>
+    </Item>
+    <Item>
+      <name>ChatLog</name>
+      <resource href="ChatLog.txt"/>
+    </Item>
+    <Item>
+      <name>Checkroom</name>
+      <resource href="Checkroom.txt"/>
+    </Item>
+    <Item>
+      <name>ChoiceFaction</name>
+      <resource href="ChoiceFaction.txt"/>
+    </Item>
+    <Item>
+      <name>ClientImage</name>
+      <resource href="ClientImage.txt"/>
+    </Item>
+    <Item>
+      <name>ComebackGuide</name>
+      <resource href="ComebackGuide.txt"/>
+    </Item>
+    <Item>
+      <name>ContextAEMarker</name>
+      <resource href="ContextAEMarker.txt"/>
+    </Item>
+    <Item>
+      <name>ContextActionbar</name>
+      <resource href="ContextActionbar.txt"/>
+    </Item>
+    <Item>
+      <name>ContextActions</name>
+      <resource href="ContextActions.txt"/>
+    </Item>
+    <Item>
+      <name>ContextAnnounceCustom</name>
+      <resource href="ContextAnnounceCustom.txt"/>
+    </Item>
+    <Item>
+      <name>ContextAuction</name>
+      <resource href="ContextAuction.txt"/>
+    </Item>
+    <Item>
+      <name>ContextBag</name>
+      <resource href="ContextBag.txt"/>
+    </Item>
+    <Item>
+      <name>ContextBulletinBoard2</name>
+      <resource href="ContextBulletinBoard2.txt"/>
+    </Item>
+    <Item>
+      <name>ContextBuyPopup</name>
+      <resource href="ContextBuyPopup.txt"/>
+    </Item>
+    <Item>
+      <name>ContextBuySplitStack</name>
+      <resource href="ContextBuySplitStack.txt"/>
+    </Item>
+    <Item>
+      <name>ContextCharacter2</name>
+      <resource href="ContextCharacter2.txt"/>
+    </Item>
+    <Item>
+      <name>ContextCurrencyExchange</name>
+      <resource href="ContextCurrencyExchange.txt"/>
+    </Item>
+    <Item>
+      <name>ContextDamageVisualization</name>
+      <resource href="ContextDamageVisualization.txt"/>
+    </Item>
+    <Item>
+      <name>ContextDepositeBox</name>
+      <resource href="ContextDepositeBox.txt"/>
+    </Item>
+    <Item>
+      <name>ContextDragNDrop</name>
+      <resource href="ContextDragNDrop.txt"/>
+    </Item>
+    <Item>
+      <name>ContextEmotions</name>
+      <resource href="ContextEmotions.txt"/>
+    </Item>
+    <Item>
+      <name>ContextFXPlayer</name>
+      <resource href="ContextFXPlayer.txt"/>
+    </Item>
+    <Item>
+      <name>ContextGuild</name>
+      <resource href="ContextGuild.txt"/>
+    </Item>
+    <Item>
+      <name>ContextItemUsage</name>
+      <resource href="ContextItemUsage.txt"/>
+    </Item>
+    <Item>
+      <name>ContextLootBag</name>
+      <resource href="ContextLootBag.txt"/>
+    </Item>
+    <Item>
+      <name>ContextMatchMakingNotifier</name>
+      <resource href="ContextMatchMakingNotifier.txt"/>
+    </Item>
+    <Item>
+      <name>ContextMatchMakingSelect</name>
+      <resource href="ContextMatchMakingSelect.txt"/>
+    </Item>
+    <Item>
+      <name>ContextOvertip</name>
+      <resource href="ContextOvertip.txt"/>
+    </Item>
+    <Item>
+      <name>ContextPOIMarker</name>
+      <resource href="ContextPOIMarker.txt"/>
+    </Item>
+    <Item>
+      <name>ContextPlayerTrade</name>
+      <resource href="ContextPlayerTrade.txt"/>
+    </Item>
+    <Item>
+      <name>ContextPopup</name>
+      <resource href="ContextPopup.txt"/>
+    </Item>
+    <Item>
+      <name>ContextShipAstrolabeJump</name>
+      <resource href="ContextShipAstrolabeJump.txt"/>
+    </Item>
+    <Item>
+      <name>ContextShipCustomization</name>
+      <resource href="ContextShipCustomization.txt"/>
+    </Item>
+    <Item>
+      <name>ContextShipDevice</name>
+      <resource href="ContextShipDevice.txt"/>
+    </Item>
+    <Item>
+      <name>ContextShipDeviceCrosshair</name>
+      <resource href="ContextShipDeviceCrosshair.txt"/>
+    </Item>
+    <Item>
+      <name>ContextShipDeviceNavigator</name>
+      <resource href="ContextShipDeviceNavigator.txt"/>
+    </Item>
+    <Item>
+      <name>ContextShipDeviceOvertip</name>
+      <resource href="ContextShipDeviceOvertip.txt"/>
+    </Item>
+    <Item>
+      <name>ContextShipDevicesReplacement</name>
+      <resource href="ContextShipDevicesReplacement.txt"/>
+    </Item>
+    <Item>
+      <name>ContextShipHangar</name>
+      <resource href="ContextShipHangar.txt"/>
+    </Item>
+    <Item>
+      <name>ContextShipPlate</name>
+      <resource href="ContextShipPlate.txt"/>
+    </Item>
+    <Item>
+      <name>ContextSocial</name>
+      <resource href="ContextSocial.txt"/>
+    </Item>
+    <Item>
+      <name>ContextSplitstack</name>
+      <resource href="ContextSplitstack.txt"/>
+    </Item>
+    <Item>
+      <name>ContextStable</name>
+      <resource href="ContextStable.txt"/>
+    </Item>
+    <Item>
+      <name>ContextTalents</name>
+      <resource href="ContextTalents.txt"/>
+    </Item>
+    <Item>
+      <name>ContextTooltip</name>
+      <resource href="ContextTooltip.txt"/>
+    </Item>
+    <Item>
+      <name>ContextTooltipCompare</name>
+      <resource href="ContextTooltipCompare.txt"/>
+    </Item>
+    <Item>
+      <name>ContextUniMessageBox</name>
+      <resource href="ContextUniMessageBox.txt"/>
+    </Item>
+    <Item>
+      <name>ContextVendorTrade</name>
+      <resource href="ContextVendorTrade.txt"/>
+    </Item>
+    <Item>
+      <name>CraftReforge</name>
+      <resource href="CraftReforge.txt"/>
+    </Item>
+    <Item>
+      <name>CraftV22</name>
+      <resource href="CraftV22.txt"/>
+    </Item>
+    <Item>
+      <name>Death</name>
+      <resource href="Death.txt"/>
+    </Item>
+    <Item>
+      <name>DetectorManager</name>
+      <resource href="DetectorManager.txt"/>
+    </Item>
+    <Item>
+      <name>EmailCollection</name>
+      <resource href="EmailCollection.txt"/>
+    </Item>
+    <Item>
+      <name>Enchanter</name>
+      <resource href="Enchanter.txt"/>
+    </Item>
+    <Item>
+      <name>EngineerOverheating</name>
+      <resource href="EngineerOverheating.txt"/>
+    </Item>
+    <Item>
+      <name>EscMenu</name>
+      <resource href="EscMenu.txt"/>
+    </Item>
+    <Item>
+      <name>EventCalendar</name>
+      <resource href="EventCalendar.txt"/>
+    </Item>
+    <Item>
+      <name>EventNotification</name>
+      <resource href="EventNotification.txt"/>
+    </Item>
+    <Item>
+      <name>Fitting</name>
+      <resource href="Fitting.txt"/>
+    </Item>
+    <Item>
+      <name>GuildHeraldicsBuilder</name>
+      <resource href="GuildHeraldicsBuilder.txt"/>
+    </Item>
+    <Item>
+      <name>HangarDevices</name>
+      <resource href="HangarDevices.txt"/>
+    </Item>
+    <Item>
+      <name>IMEHelper</name>
+      <resource href="IMEHelper.txt"/>
+    </Item>
+    <Item>
+      <name>InspectCharacter</name>
+      <resource href="InspectCharacter.txt"/>
+    </Item>
+    <Item>
+      <name>InstanceKick</name>
+      <resource href="InstanceKick.txt"/>
+    </Item>
+    <Item>
+      <name>InstanceModifiers</name>
+      <resource href="InstanceModifiers.txt"/>
+    </Item>
+    <Item>
+      <name>ItemMall</name>
+      <resource href="ItemMall.txt"/>
+    </Item>
+    <Item>
+      <name>LFG</name>
+      <resource href="LFG.txt"/>
+    </Item>
+    <Item>
+      <name>LagMeter</name>
+      <resource href="LagMeter.txt"/>
+    </Item>
+    <Item>
+      <name>LastStand</name>
+      <resource href="LastStand.txt"/>
+    </Item>
+    <Item>
+      <name>LayoutManager</name>
+      <resource href="LayoutManager.txt"/>
+    </Item>
+    <Item>
+      <name>LeaderBoard</name>
+      <resource href="LeaderBoard.txt"/>
+    </Item>
+    <Item>
+      <name>LoginLottery</name>
+      <resource href="LoginLottery.txt"/>
+    </Item>
+    <Item>
+      <name>LootMaster</name>
+      <resource href="LootMaster.txt"/>
+    </Item>
+    <Item>
+      <name>Lottery</name>
+      <resource href="Lottery.txt"/>
+    </Item>
+    <Item>
+      <name>LotteryV2</name>
+      <resource href="LotteryV2.txt"/>
+    </Item>
+    <Item>
+      <name>MageEnergyInstability3</name>
+      <resource href="MageEnergyInstability3.txt"/>
+    </Item>
+    <Item>
+      <name>MailBox</name>
+      <resource href="MailBox.txt"/>
+    </Item>
+    <Item>
+      <name>Map</name>
+      <resource href="Map.txt"/>
+    </Item>
+    <Item>
+      <name>MatchMakingScoreBoard</name>
+      <resource href="MatchMakingScoreBoard.txt"/>
+    </Item>
+    <Item>
+      <name>Minimap</name>
+      <resource href="Minimap.txt"/>
+    </Item>
+    <Item>
+      <name>NecroVision</name>
+      <resource href="NecroVision.txt"/>
+    </Item>
+    <Item>
+      <name>NecromancerPet2</name>
+      <resource href="NecromancerPet2.txt"/>
+    </Item>
+    <Item>
+      <name>NewRunes</name>
+      <resource href="NewRunes.txt"/>
+    </Item>
+    <Item>
+      <name>NewsNotification</name>
+      <resource href="NewsNotification.txt"/>
+    </Item>
+    <Item>
+      <name>NpcTalk</name>
+      <resource href="NpcTalk.txt"/>
+    </Item>
+    <Item>
+      <name>Options</name>
+      <resource href="Options.txt"/>
+    </Item>
+    <Item>
+      <name>OvertipAstral</name>
+      <resource href="OvertipAstral.txt"/>
+    </Item>
+    <Item>
+      <name>PaladinShields</name>
+      <resource href="PaladinShields.txt"/>
+    </Item>
+    <Item>
+      <name>PetCommandPoints</name>
+      <resource href="PetCommandPoints.txt"/>
+    </Item>
+    <Item>
+      <name>PinMenu</name>
+      <resource href="PinMenu.txt"/>
+    </Item>
+    <Item>
+      <name>Plates</name>
+      <resource href="Plates.txt"/>
+    </Item>
+    <Item>
+      <name>ProcsVisualization</name>
+      <resource href="ProcsVisualization.txt"/>
+    </Item>
+    <Item>
+      <name>PsionicContact2</name>
+      <resource href="PsionicContact2.txt"/>
+    </Item>
+    <Item>
+      <name>QuestAutoNavigationOptionAsk</name>
+      <resource href="QuestAutoNavigationOptionAsk.txt"/>
+    </Item>
+    <Item>
+      <name>QuestLog</name>
+      <resource href="QuestLog.txt"/>
+    </Item>
+    <Item>
+      <name>QuestTracker</name>
+      <resource href="QuestTracker.txt"/>
+    </Item>
+    <Item>
+      <name>Questions</name>
+      <resource href="Questions.txt"/>
+    </Item>
+    <Item>
+      <name>Raid</name>
+      <resource href="Raid.txt"/>
+    </Item>
+    <Item>
+      <name>Rating</name>
+      <resource href="Rating.txt"/>
+    </Item>
+    <Item>
+      <name>ReadyCheck</name>
+      <resource href="ReadyCheck.txt"/>
+    </Item>
+    <Item>
+      <name>Remort</name>
+      <resource href="Remort.txt"/>
+    </Item>
+    <Item>
+      <name>RemortEquipment</name>
+      <resource href="RemortEquipment.txt"/>
+    </Item>
+    <Item>
+      <name>RemortList</name>
+      <resource href="RemortList.txt"/>
+    </Item>
+    <Item>
+      <name>RemortShareAbility</name>
+      <resource href="RemortShareAbility.txt"/>
+    </Item>
+    <Item>
+      <name>RewardsExchange</name>
+      <resource href="RewardsExchange.txt"/>
+    </Item>
+    <Item>
+      <name>RollGreedNeed</name>
+      <resource href="RollGreedNeed.txt"/>
+    </Item>
+    <Item>
+      <name>RouletteBox</name>
+      <resource href="RouletteBox.txt"/>
+    </Item>
+    <Item>
+      <name>RuneCombiner</name>
+      <resource href="RuneCombiner.txt"/>
+    </Item>
+    <Item>
+      <name>SOSMessage</name>
+      <resource href="SOSMessage.txt"/>
+    </Item>
+    <Item>
+      <name>ScrollingCombatText</name>
+      <resource href="ScrollingCombatText.txt"/>
+    </Item>
+    <Item>
+      <name>ShipParkingOvertip</name>
+      <resource href="ShipParkingOvertip.txt"/>
+    </Item>
+    <Item>
+      <name>ShipSummon</name>
+      <resource href="ShipSummon.txt"/>
+    </Item>
+    <Item>
+      <name>SocialNetworksCaptcha</name>
+      <resource href="SocialNetworksCaptcha.txt"/>
+    </Item>
+    <Item>
+      <name>SocialNetworksOptions</name>
+      <resource href="SocialNetworksOptions.txt"/>
+    </Item>
+    <Item>
+      <name>SocialNetworksPosting</name>
+      <resource href="SocialNetworksPosting.txt"/>
+    </Item>
+    <Item>
+      <name>SoulTalents</name>
+      <resource href="SoulTalents.txt"/>
+    </Item>
+    <Item>
+      <name>Sounds</name>
+      <resource href="Sounds.txt"/>
+    </Item>
+    <Item>
+      <name>SpellPanel</name>
+      <resource href="SpellPanel.txt"/>
+    </Item>
+    <Item>
+      <name>Spellbook</name>
+      <resource href="Spellbook.txt"/>
+    </Item>
+    <Item>
+      <name>StalkerCartridgeBelt2</name>
+      <resource href="StalkerCartridgeBelt2.txt"/>
+    </Item>
+    <Item>
+      <name>StrongBox</name>
+      <resource href="StrongBox.txt"/>
+    </Item>
+    <Item>
+      <name>StrongholdBestiary</name>
+      <resource href="StrongholdBestiary.txt"/>
+    </Item>
+    <Item>
+      <name>StrongholdChoiceDungeon</name>
+      <resource href="StrongholdChoiceDungeon.txt"/>
+    </Item>
+    <Item>
+      <name>SubtitleShipInfo</name>
+      <resource href="SubtitleShipInfo.txt"/>
+    </Item>
+    <Item>
+      <name>Subtitles</name>
+      <resource href="Subtitles.txt"/>
+    </Item>
+    <Item>
+      <name>TabSelector</name>
+      <resource href="TabSelector.txt"/>
+    </Item>
+    <Item>
+      <name>TalentInformer</name>
+      <resource href="TalentInformer.txt"/>
+    </Item>
+    <Item>
+      <name>TargetSale</name>
+      <resource href="TargetSale.txt"/>
+    </Item>
+    <Item>
+      <name>TargetSelection</name>
+      <resource href="TargetSelection.txt"/>
+    </Item>
+    <Item>
+      <name>Teleport</name>
+      <resource href="Teleport.txt"/>
+    </Item>
+    <Item>
+      <name>TheOrder</name>
+      <resource href="TheOrder.txt"/>
+    </Item>
+    <Item>
+      <name>Tutorial</name>
+      <resource href="Tutorial.txt"/>
+    </Item>
+    <Item>
+      <name>UpgradeMetaItem</name>
+      <resource href="UpgradeMetaItem.txt"/>
+    </Item>
+    <Item>
+      <name>UserAddonManager</name>
+      <resource href="UserAddonManager.txt"/>
+    </Item>
+    <Item>
+      <name>Vote</name>
+      <resource href="Vote.txt"/>
+    </Item>
+    <Item>
+      <name>Warnings</name>
+      <resource href="Warnings.txt"/>
+    </Item>
+    <Item>
+      <name>WarriorCombatAdvantage</name>
+      <resource href="WarriorCombatAdvantage.txt"/>
+    </Item>
+    <Item>
+      <name>WheelOfLoot</name>
+      <resource href="WheelOfLoot.txt"/>
+    </Item>
+    <Item>
+      <name>ZoneAnnounce</name>
+      <resource href="ZoneAnnounce.txt"/>
+    </Item>
+  </items>
+</UIRelatedTexts>

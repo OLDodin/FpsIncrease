@@ -242,7 +242,7 @@ function ShowSettingsWnd(aSetName, anIsUpdate, anUpdateIndex)
 		m_updateInfo.isNeedUpdate = false
 		m_updateInfo.updateForIndex = 0
 	end
-	setText(m_setHeaderWidget, getLocale()["setName"]..aSetName)
+	setText(m_setHeaderWidget, ConcatWString(getLocale()["setName"], aSetName))
 	show(m_configForm)
 end
 

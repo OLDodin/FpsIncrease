@@ -35,18 +35,18 @@ function CreateSubMenu(ClassName)
 				MenuName = "*** "..MenuName
 			end
 			table.insert( SubMenu, {
-				name = userMods.ToWString( MenuName ),
+				name = toWString( MenuName ),
 				onActivate = function() 
 					SetActiveByIndex(getBuildIndex( build ))
 				end,
 				submenu = {
-					{ name = userMods.ToWString(locale["rename"]),
+					{ name = toWString(locale["rename"]),
 						onActivate = function() onRenameBuild( build ) end },
-					{ name = userMods.ToWString(locale["delete"]),
+					{ name = toWString(locale["delete"]),
 						onActivate = function() 
 							DeletePressed(getBuildIndex( build ))
 						end },
-					{ name = userMods.ToWString(locale["update"]),
+					{ name = toWString(locale["update"]),
 						onActivate = function() 
 							ShowSettingsWnd(build.name, true, getBuildIndex( build ))
 						end },
@@ -113,7 +113,7 @@ function onRenameBuild( build )
 	item:Show( false )
 
 	local edit = ClassMenu:GetChildChecked( "ItemEditTemplate", false )
-	edit:SetText( userMods.ToWString( build.name ) )
+	edit:SetText( toWString( build.name ) )
 	edit:SetPlacementPlain( item:GetPlacementPlain() )
 	edit:Show( true )
 	edit:Enable( true )
