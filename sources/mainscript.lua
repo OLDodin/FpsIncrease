@@ -10,6 +10,14 @@ m_updateInfo.isNeedUpdate = false
 m_updateInfo.updateForIndex = 0
 local m_setHeaderWidget = nil
 
+function setLocaleTextWithColor(widget, aColor)
+	setLocaleTextEx(widget, nil, aColor)
+end
+
+function setLocaleTextFPS(widget, aFontSize, checked)
+	setLocaleTextEx(widget, checked, "ColorWhite",  "left", aFontSize)
+end
+
 function SaveAddonTable()
 	local savedData = {}
 	savedData["selectedIndex"] = m_mySetAddons.index
@@ -242,7 +250,7 @@ function ShowSettingsWnd(aSetName, anIsUpdate, anUpdateIndex)
 		m_updateInfo.isNeedUpdate = false
 		m_updateInfo.updateForIndex = 0
 	end
-	setText(m_setHeaderWidget, ConcatWString(getLocale()["setName"], aSetName))
+	setText(m_setHeaderWidget, ConcatWString(getLocale()["setName"], toWString(aSetName)))
 	show(m_configForm)
 end
 
@@ -285,7 +293,7 @@ end
 
 function CreateAddonChexbox(aForm, aName, aXShift, aYShift)
 	local checkBoxTxt = createWidget(aForm, aName, "TextView", nil, nil, 200, 15, 30+aXShift, 10+aYShift*20)
-	setLocaleText(checkBoxTxt, 10)
+	setLocaleTextFPS(checkBoxTxt, 10)
 	local nameOfCheckBox = aName.."_checkbox"
 	local currCheckBox = createWidget(aForm, nameOfCheckBox, "CheckBox", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 15, 15, 12+aXShift, 10+aYShift*20)
 	m_createdCheckBoxes[aName] = currCheckBox
@@ -306,15 +314,15 @@ function InitConfigForm()
 	local btnWidth = 220
 	local setBtnPos = formWidth/2-btnWidth/2
 	
-	setLocaleText(createWidget(form, "minimalButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 35))
-	setLocaleText(createWidget(form, "mediumButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 65))
-	setLocaleText(createWidget(form, "allButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 95))
+	setLocaleTextFPS(createWidget(form, "minimalButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 35))
+	setLocaleTextFPS(createWidget(form, "mediumButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 65))
+	setLocaleTextFPS(createWidget(form, "allButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 95))
 	
-	--setLocaleText(createWidget(form, "gameOptions", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 240, 25, setBtnPos+300, 65))
+	--setLocaleTextFPS(createWidget(form, "gameOptions", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 240, 25, setBtnPos+300, 65))
 
 
-	setLocaleText(createWidget(form, "saveButton1", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 140, 25, 90, 872))
-	setLocaleText(createWidget(form, "closeBarsButton2", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 140, 25, 270, 872))
+	setLocaleTextFPS(createWidget(form, "saveButton1", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 140, 25, 90, 872))
+	setLocaleTextFPS(createWidget(form, "closeBarsButton2", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 140, 25, 270, 872))
 	
 	
 	setLocaleTextWithColor(createWidget(form, "header", "TextView", nil, nil, 600, 25, formWidth/2-300, 124), "ColorYellow")
@@ -354,8 +362,8 @@ function InitConfigForm()
 	end
 	--LogInfo(str)
 
-	setLocaleText(createWidget(form, "selectAll", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 160, 25, 20, 872))
-	setLocaleText(createWidget(form, "deseletAll", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 160, 25, 190, 872))
+	setLocaleTextFPS(createWidget(form, "selectAll", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 160, 25, 20, 872))
+	setLocaleTextFPS(createWidget(form, "deseletAll", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 160, 25, 190, 872))
 	
 	setText(createWidget(form, "closeBarsButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 20, 20, 20, 20), "x")
 	DnD:Init(form, form, true)
@@ -455,7 +463,7 @@ end
 
 
 function Init()
-	m_template = createWidget(nil, "Template", "Template")
+	m_template = getChild(mainForm, "Template")
 	setTemplateWidget(m_template)
 		
 	local button=createWidget(mainForm, "FPSIncreaseButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 100, 25, 300, 20)

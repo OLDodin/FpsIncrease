@@ -5,12 +5,7 @@
 		<Item>
 			<Id>Main</Id>
 			<Form href="Widgets/MenuForm.xdb#xpointer(/WidgetForm)"/>
-		</Item>
-		<Item>
-			<Id>Template</Id>
-			<Form href="Widgets/Templates/Main.xdb#xpointer(/WidgetForm)"/>
-		</Item>
-		
+		</Item>		
 	</Forms>
 	<MainFormId>Main</MainFormId>
 	<Name>FPSIncrease</Name>
