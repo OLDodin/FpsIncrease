@@ -308,7 +308,9 @@ function InitConfigForm()
 	hide(form)
 	
 	local addons = common.GetStateManagedAddons()
-	table.insert(addons, 0, {})
+	if addons[0] then
+		table.insert(addons, 0, {})
+	end
 	table.sort(addons, CompareByString) --sorting with [1] position
 	
 	local btnWidth = 220
@@ -328,7 +330,7 @@ function InitConfigForm()
 	setLocaleTextWithColor(createWidget(form, "header", "TextView", nil, nil, 600, 25, formWidth/2-300, 124), "ColorYellow")
 	m_setHeaderWidget = createWidget(form, "saveheader", "TextView", nil, nil, 600, 25, formWidth/2-50, 10)
 
-	local addonsPerColumn = math.floor(GetTableSize( addons )/5)
+	local addonsPerColumn = math.ceil(GetTableSize( addons )/5)
 	local scroll = createWidget(form, "container", "ScrollableContainer", nil, nil, formWidth, 720, 4, 144)
 	local panel = createWidget(form, "group1", "Panel", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, formWidth-50, addonsPerColumn*20+20, 0, 0)
 	scroll:PushBack(panel)
@@ -336,28 +338,32 @@ function InitConfigForm()
 	local xShift = 0
 	local yShift = 0
 	
-	for i = 1, GetTableSize( addons ) - 1 do
+	for i = 1, GetTableSize( addons ) do
 		local info = addons[i]
-		if not string.find(info.name, "FpsIncrease") 
-		and not string.find(info.name, "UserAddon") 
-		and not string.find(info.name, "SpectatorTools")
-		or info.name == "UserAddonManager"
-		then
-			CreateAddonChexbox(panel, info.name, xShift, yShift)
-			--str = str.."Locales[\"rus\"][\""..info.name.."\"]=\"texttext\"\n"	
-			--str = str..", \n".."\""..info.name.."\""
-			xShift, yShift = CalcShift(xShift, yShift, addonsPerColumn)
+		if info then
+			if not string.find(info.name, "FpsIncrease") 
+			and not string.find(info.name, "UserAddon") 
+			and not string.find(info.name, "SpectatorTools")
+			or info.name == "UserAddonManager"
+			then
+				CreateAddonChexbox(panel, info.name, xShift, yShift)
+				--str = str.."Locales[\"rus\"][\""..info.name.."\"]=\"texttext\"\n"	
+				--str = str..", \n".."\""..info.name.."\""
+				xShift, yShift = CalcShift(xShift, yShift, addonsPerColumn)
+			end
 		end
 	end
 	-- add useraddons to the end
-	for i = 1, GetTableSize( addons ) - 1 do
+	for i = 1, GetTableSize( addons ) do
 		local info = addons[i]
-		if not string.find(info.name, "FpsIncrease") 
-		and string.find(info.name, "UserAddon") 
-		and info.name ~= "UserAddonManager"
-		then
-			CreateAddonChexbox(panel, info.name, xShift, yShift)		
-			xShift, yShift = CalcShift(xShift, yShift, addonsPerColumn)
+		if info then
+			if not string.find(info.name, "FpsIncrease") 
+			and string.find(info.name, "UserAddon") 
+			and info.name ~= "UserAddonManager"
+			then
+				CreateAddonChexbox(panel, info.name, xShift, yShift)		
+				xShift, yShift = CalcShift(xShift, yShift, addonsPerColumn)				
+			end
 		end
 	end
 	--LogInfo(str)
@@ -366,7 +372,7 @@ function InitConfigForm()
 	setLocaleTextFPS(createWidget(form, "deseletAll", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 160, 25, 190, 872))
 	
 	setText(createWidget(form, "closeBarsButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 20, 20, 20, 20), "x")
-	DnD:Init(form, form, true)
+	DnD.Init(form, form, true)
 	AddReaction("closeBarsButton", function () HideSettingsWnd() end)
 	AddReaction("closeBarsButton2", function () HideSettingsWnd() end)
 	
@@ -403,9 +409,9 @@ function ChangeSelectedAddons()
 
 	local addons = common.GetStateManagedAddons()
 
-	for i = 0, GetTableSize( addons ) - 1 do
+	for i = 0, GetTableSize( addons ) do
 		local info = addons[i]
-		if  string.find(info.name, "AOPanelMod") then
+		if info and string.find(info.name, "AOPanel") then
 			if info.isLoaded then
 				common.StateUnloadManagedAddon( info.name )
 				common.StateLoadManagedAddon( info.name )
@@ -468,7 +474,7 @@ function Init()
 		
 	local button=createWidget(mainForm, "FPSIncreaseButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 100, 25, 300, 20)
 	setText(button, "Boost off")
-	DnD:Init(button, button, true)
+	DnD.Init(button, button, true)
 	
 	common.RegisterReactionHandler(ButtonPressed, "execute")
 	common.RegisterReactionHandler( RightClick, "RIGHT_CLICK" )
