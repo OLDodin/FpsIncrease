@@ -251,11 +251,11 @@ function ShowSettingsWnd(aSetName, anIsUpdate, anUpdateIndex)
 		m_updateInfo.updateForIndex = 0
 	end
 	setText(m_setHeaderWidget, ConcatWString(getLocale()["setName"], toWString(aSetName)))
-	show(m_configForm)
+	DnD.ShowWdg(m_configForm)
 end
 
 function HideSettingsWnd()
-	hide(m_configForm)
+	DnD.HideWdg(m_configForm)
 	ClosePressed()
 end
 
@@ -431,7 +431,7 @@ function onAOPanelStart( params )
 		userMods.SendEvent( "AOPANEL_SEND_ADDON",
 			{ name = common.GetAddonName(), sysName = common.GetAddonName(), param = params } )
 
-		hide(getChild(mainForm, "FPSIncreaseButton"))
+		DnD.HideWdg(getChild(mainForm, "FPSIncreaseButton"))
 	end
 end
 
@@ -451,8 +451,8 @@ function onAOPanelRightClick( params )
 end
 
 function onAOPanelChange( params )
-	if params.unloading and params.name == "UserAddon/AOPanelMod" then
-		show(getChild(mainForm, "FPSIncreaseButton"))
+	if params.unloading and string.find(params.name, "AOPanel") then
+		DnD.ShowWdg(getChild(mainForm, "FPSIncreaseButton"))
 	end
 end
 
@@ -463,7 +463,7 @@ function enableAOPanelIntegration( enable )
 	if enable then
 		onAOPanelStart()
 	else
-		show(getChild(mainForm, "FPSIncreaseButton"))
+		DnD.ShowWdg(getChild(mainForm, "FPSIncreaseButton"))
 	end
 end
 
