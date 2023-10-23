@@ -28,7 +28,7 @@ local ItemTemplate = mainForm:GetChildChecked( "ItemTemplate", true ):GetWidgetD
 local SubmenuTemplate = mainForm:GetChildChecked( "SubmenuTemplate", true ):GetWidgetDesc()
 local CombinedTemplate = mainForm:GetChildChecked( "CombinedTemplate", true ):GetWidgetDesc()
 
-function ShowMenu( screenPosition, menu, parent )
+function ShowMenu( screenPosition, menu, parent, isSubMenu )
 	local menuWidget = mainForm:CreateWidgetByDesc( MenuTemplate )
 	mainForm:AddChild( menuWidget )
 
@@ -60,7 +60,7 @@ function ShowMenu( screenPosition, menu, parent )
 	menuPlacement.posY = screenPosition.y
 	menuPlacement.sizeX = width + margin * 2
 	menuPlacement.sizeY = height + margin
-	MakeVisible( menuPlacement )
+	MakeVisible( menuPlacement, isSubMenu )
 	menuWidget:SetPlacementPlain( menuPlacement )
 
 	SaveAction( menuWidget, { parentMenu = parent and parent:GetInstanceId(), childMenu = nil } )
@@ -76,6 +76,10 @@ function DestroyMenu( menuWidget )
 
 	ClearActions( menuWidget )
 	menuWidget:DestroyWidget()
+end
+
+function GetChildMenu(menuWidget)
+	return Actions[ menuWidget:GetInstanceId() ].childMenu
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -126,10 +130,14 @@ function GetParentMenu( childWidget )
 	return menu
 end
 
-function MakeVisible( placement )
+function MakeVisible( placement, isSubMenu )
 	local posConverter = widgetsSystem:GetPosConverterParams()
 	if placement.posX + placement.sizeX > posConverter.fullVirtualSizeX then
 		placement.posX = posConverter.fullVirtualSizeX - placement.sizeX
+		if isSubMenu then
+			placement.posY = placement.posY + 18
+			placement.posX = placement.posX - 20
+		end
 	end
 	if placement.posY + placement.sizeY > posConverter.fullVirtualSizeY then
 		placement.posY = posConverter.fullVirtualSizeY - placement.sizeY
@@ -175,7 +183,8 @@ function OnOpenSubmenu( params )
 				DestroyMenu( menuInfo.childMenu )
 				menuInfo.childMenu = nil
 			end
-			menuInfo.childMenu = ShowMenu( pos, action, menuWidget )
+			menuInfo.childMenu = ShowMenu( pos, action, menuWidget, true )
+			
 		end
 	end
 end
@@ -189,6 +198,14 @@ function OnCloseSubmenu( params )
 			menuInfo.childMenu = nil
 		end
 	end
+end
+
+function ToWString(text)
+	if not text then return nil end
+	if not common.IsWString(text) then
+		text=userMods.ToWString(tostring(text))
+	end
+	return text
 end
 
 ----------------------------------------------------------------------------------------------------

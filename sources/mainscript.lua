@@ -157,8 +157,8 @@ function SavePressed()
 	SaveAddonTable()
 	HideSettingsWnd()
 	
-	onShowList()
-	onShowList() 
+	onShowList(g_lastAoPanelParams)
+	onShowList(g_lastAoPanelParams) 
 end
 
 function DeletePressed(anIndex)
@@ -171,8 +171,8 @@ function DeletePressed(anIndex)
 	table.remove( g_addonSetTable, anIndex )
 	SaveAddonTable()
 	HideSettingsWnd()
-	onShowList() 
-	onShowList() 
+	onShowList(g_lastAoPanelParams) 
+	onShowList(g_lastAoPanelParams) 
 end
 
 function GetSelectedSet()
@@ -437,7 +437,8 @@ end
 
 function onAOPanelLeftClick( params )
 	if params.sender == common.GetAddonName() then
-		onShowList()
+		g_lastAoPanelParams = params
+		onShowList(params)
 	end
 end
 

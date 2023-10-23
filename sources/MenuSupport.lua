@@ -1,5 +1,6 @@
 
 Global( "g_addonSetTable", {} )
+Global( "g_lastAoPanelParams", nil )
 local locale=getLocale()
 
 
@@ -75,7 +76,7 @@ function onShowList( params )
 			local pos = listButton:GetPlacementPlain()
 			ClassMenu = ShowMenu( { x = pos.posX, y = pos.posY + pos.sizeY }, menu )
 		else
-			ClassMenu = ShowMenu( { x = 0, y = 32 }, menu )
+			ClassMenu = ShowMenu( { x = params and params.x or 0, y = 32 }, menu )
 		end
 
 		RegisterDnd()
@@ -139,14 +140,18 @@ function onRenameAccept( params )
 	SaveAddonTable()
 	RenameBuildIndex = nil
 
-	onShowList()
-	onShowList()
+	onShowList(g_lastAoPanelParams)
+	onShowList(g_lastAoPanelParams)
 end
 
 function onRenameFocus( params )
 	if not params.active then
 		onRenameAccept( params )
 	end
+end
+
+function onEnterNewCancel( params )
+	onShowList(g_lastAoPanelParams)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -253,11 +258,10 @@ function InitMenuSupport()
 
 
 	common.RegisterReactionHandler( onSaveBuild, "SaveBuildReaction" )
-	common.RegisterReactionHandler( onShowList, "ShowBuildsReaction" )
+	common.RegisterReactionHandler( onEnterNewCancel, "ShowBuildsReaction" )
 	common.RegisterReactionHandler( onRenameCancel, "RenameCancelReaction" )
 	common.RegisterReactionHandler( onRenameAccept, "RenameBuildReaction" )
 	common.RegisterReactionHandler( onRenameFocus, "RenameFocusChanged" )
-	common.RegisterReactionHandler( onShowList, "WikiEscReaction" )
 
 	common.RegisterEventHandler( OnDndPick, "EVENT_DND_PICK_ATTEMPT" )
 	
