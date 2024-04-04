@@ -84,7 +84,16 @@ end
 
 function ButtonPressed(params)
 	RunReaction(params.widget)
-	changeCheckBox(params.widget)
+end
+
+function CheckBoxChangedOn(aParams)
+	changeCheckBox(aParams.widget)
+	ButtonPressed(aParams)
+end
+
+function CheckBoxChangedOff(aParams)
+	changeCheckBox(aParams.widget)
+	ButtonPressed(aParams)
 end
 
 function RightClick(params)
@@ -439,6 +448,8 @@ function onAOPanelLeftClick( params )
 	if params.sender == common.GetAddonName() then
 		g_lastAoPanelParams = params
 		onShowList(params)
+	else
+		HideMainMenu()
 	end
 end
 
@@ -478,7 +489,9 @@ function Init()
 	DnD.Init(button, button, true)
 	
 	common.RegisterReactionHandler(ButtonPressed, "execute")
-	common.RegisterReactionHandler( RightClick, "RIGHT_CLICK" )
+	common.RegisterReactionHandler( RightClick, "executeRightClick" )
+	common.RegisterReactionHandler(CheckBoxChangedOn, "CheckBoxChangedOn")
+	common.RegisterReactionHandler(CheckBoxChangedOff, "CheckBoxChangedOff")
 	common.RegisterEventHandler( onAOPanelStart, "AOPANEL_START" )
 	common.RegisterEventHandler( onAOPanelLeftClick, "AOPANEL_BUTTON_LEFT_CLICK" )
 	common.RegisterEventHandler( onAOPanelRightClick, "AOPANEL_BUTTON_RIGHT_CLICK" )

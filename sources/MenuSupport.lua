@@ -26,6 +26,13 @@ function getBuildIndex( build )
 	end
 end
 
+function HideMainMenu()
+	if ClassMenu and ClassMenu:IsValid() then
+		DestroyMenu( ClassMenu )
+		ClassMenu = nil 
+	end
+end
+
 function CreateSubMenu(ClassName)
 	local SubMenu = {}
 	for i, v in ipairs( g_addonSetTable ) do
@@ -50,6 +57,7 @@ function CreateSubMenu(ClassName)
 					{ name = toWString(locale["update"]),
 						onActivate = function() 
 							ShowSettingsWnd(build.name, true, getBuildIndex( build ))
+							HideMainMenu()
 						end },
 				}
 			})
@@ -82,8 +90,7 @@ function onShowList( params )
 		RegisterDnd()
 		ClassMenu:GetChildChecked( "BuildNameEdit", true ):SetFocus( true )
 	else
-		DestroyMenu( ClassMenu )
-		ClassMenu = nil
+		HideMainMenu()
 	end
 end
 

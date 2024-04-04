@@ -3,6 +3,12 @@ local cachedFromWString = userMods.FromWString
 local cachedIsWString = common.IsWString
 local cachedIsExist = object.IsExist
 local cachedIsUnit = object.IsUnit
+local cachedCreateValuedText = common.CreateValuedText
+
+--init global Locales
+getLocale()
+local cachedTimeAbbr = {}
+
 --------------------------------------------------------------------------------
 -- Integer functions
 --------------------------------------------------------------------------------
@@ -64,6 +70,16 @@ function toLowerWString(text)
 	return toWString(text)
 end
 
+function splitString(text, delimeter)
+	text=toLowerString(text)
+	local regxEverythingExceptDelimeter = '([^'..delimeter..']+)'
+	local res = {}
+	for x in string.gmatch(text, regxEverythingExceptDelimeter) do
+		table.insert(res, x)
+	end
+	return res
+end
+
 function find(text, word)
 	text=toStringUtils(text)
 	word=toStringUtils(word)
@@ -100,6 +116,19 @@ function ConcatWString(...)
 	return wStr
 end 
 
+
+local m_valuedText = cachedCreateValuedText()
+m_valuedText:SetFormat(toWString('<header><r name="text_label"/></header>'))
+local m_htmlWstr = userMods.ToWString("<html>")
+
+function removeHtmlFromWString(text)
+	if text:IsContain(m_htmlWstr) then
+		m_valuedText:SetVal("text_label", text)
+		return m_valuedText:ToWString()
+	end
+	return text
+end
+
 function LogAllCSSStyle()
 	local listCSS = common.GetCSSList()
 	for i = 0, GetTableSize(listCSS) do
@@ -109,18 +138,23 @@ function LogAllCSSStyle()
 	end
 end
 
+
 function formatText(text, align, fontSize, shadow, outline, fontName)
-	local firstPart = "<body fontname='"..(toStringUtils(fontName) or "AllodsWest").."' alignx = '"..(toStringUtils(align) or "left").."' fontsize='"..(toStringUtils(fontSize) or "14").."' shadow='"..(toStringUtils(shadow) or "0").."' outline='"..(toStringUtils(outline) or "1").."'><rs class='color'>"
+	local firstPart = "<body fontname='"..(toStringUtils(fontName) or "AllodsWest")
+					.."' alignx = '"..(align or "left")
+					.."' fontsize='"..(fontSize and tostring(fontSize) or "14")
+					.."' shadow='"..(shadow and tostring(shadow) or "0")
+					.."' outline='"..(outline and tostring(outline) or "1")
+					.."'><rs class='color'>"
 	local textMessage = toWString(text) or common.GetEmptyWString()
 	local secondPart = "</rs></body>"
-	return ConcatWString(firstPart, textMessage, secondPart)
+	return firstPart..textMessage..secondPart
 end
 
 function toValuedText(text, color, align, fontSize, shadow, outline, fontName)
-	local valuedText=common.CreateValuedText()
-	text=toWString(text)
+	local valuedText = cachedCreateValuedText()
 	if not valuedText or not text then return nil end
-	valuedText:SetFormat(toWString(formatText(text, align, fontSize, shadow, outline, fontName)))
+	valuedText:SetFormat(formatText(text, align, fontSize, shadow, outline, fontName))
 	
 	if color then
 		valuedText:SetClassVal( "color", color )
@@ -144,16 +178,23 @@ function compare(name1, name2)
 	return name1:Compare(name2, true) == 0
 end
 
-function getTimeString(ms)
-	if		ms<1000	then return "0."..tostring(round(ms/100)).."s"
+function initTimeAbbr()
+	table.insert(cachedTimeAbbr, toStringUtils(Locales["s"] or "s"))
+	table.insert(cachedTimeAbbr, toStringUtils(Locales["m"] or "m"))
+	table.insert(cachedTimeAbbr, toStringUtils(Locales["h"] or "h"))
+	table.insert(cachedTimeAbbr, toStringUtils(Locales["d"] or "d"))
+end
+
+function getTimeString(ms, withoutFraction)
+	if		ms<1000 and not withoutFraction	then return "0."..tostring(round(ms/100))..cachedTimeAbbr[1]
 	else   	ms=round(ms/1000) end
-	if		ms<60	then return tostring(ms).."s"
-	else    ms=math.floor(ms/60) end
-	if		ms<60	then return tostring(ms).."m"
+	if		ms<60	then return tostring(ms)..cachedTimeAbbr[1]
 	else    ms=round(ms/60) end
-	if		ms<24	then return tostring(ms).."h"
+	if		ms<60	then return tostring(ms)..cachedTimeAbbr[2]
+	else    ms=round(ms/60) end
+	if		ms<24	then return tostring(ms)..cachedTimeAbbr[3]
 	else    ms=round(ms/24) end
-	return tostring(ms).."d"
+	return tostring(ms)..cachedTimeAbbr[4]
 end
 
 function makeColorMoreGray(aColor)
@@ -254,13 +295,32 @@ function resize(widget, width, height)
 	if widget.SetPlacementPlain then widget:SetPlacementPlain(BarPlace) end
 end
 
-function align(widget, alignX, alingY)
+function align(widget, alignX, alignY)
 	if not widget then return end
 	local BarPlace=widget.GetPlacementPlain and widget:GetPlacementPlain()
 	if not BarPlace then return nil end
 	if alignX then BarPlace.alignX = alignX end
-	if alingY then BarPlace.alignY = alingY end
+	if alignY then BarPlace.alignY = alignY end
 	if widget.SetPlacementPlain then widget:SetPlacementPlain(BarPlace) end
+end
+
+function updatePlacementPlain(widget, alignX, alignY, posX, posY, width, height)
+	if not widget then return end
+	local BarPlace=widget.GetPlacementPlain and widget:GetPlacementPlain()
+	if not BarPlace then return nil end
+	if alignX then BarPlace.alignX = alignX end
+	if alignY then BarPlace.alignY = alignY end
+	if posX then
+		BarPlace.posX = posX
+		BarPlace.highPosX = posX
+	end
+	if posY then
+		BarPlace.posY = posY
+		BarPlace.highPosY = posY
+	end
+	if width then BarPlace.sizeX = width end
+	if height then BarPlace.sizeY = height end
+	widget:SetPlacementPlain(BarPlace)
 end
 
 function priority(widget, priority)
@@ -300,10 +360,17 @@ end
 function setText(widget, text, color, align, fontSize, shadow, outline, fontName)
 	if not widget then return nil end
 	text=toWString(text or "")
-	if widget.SetVal 		then widget:SetVal("button_label", text)  end
-	--if widget.SetTextColor	then widget:SetTextColor("button_label", { a = 1, r = 1, g = 0, b = 0 } ) end --ENUM_ColorType_SHADOW
-	if widget.SetText		then widget:SetText(text) end
-	if widget.SetValuedText then widget:SetValuedText(toValuedText(text, color or "ColorWhite", align, fontSize, shadow, outline, fontName)) end
+	--textview
+	if widget.SetValuedText then 
+		widget:SetValuedText(toValuedText(text, color or "ColorWhite", align, fontSize, shadow, outline, fontName)) 
+	--textedit
+	elseif widget.SetText then		
+		widget:SetText(text)
+	--buttons
+	elseif widget.SetVal then
+		widget:SetVal("button_label", text) 
+		if widget.SetClassVal then widget:SetClassVal( "color", color or "ColorWhite" ) end
+	end
 end
 
 function setBackgroundTexture(widget, texture)
@@ -332,26 +399,21 @@ function getParent(widget, num)
 	return getParent(parent, num-1)
 end
 
-function getForm(widget)
-	if not widget then return nil end
-	if not widget.CreateWidgetByDesc then
-		return getForm(getParent(widget))
-	end
-	return widget
-end
-
 function createWidget(parent, widgetName, templateName, alignX, alignY, width, height, posX, posY, noParent)
 	local widget = nil
-	local owner=getForm(parent)
-
 	local desc = getDesc(templateName)
-	if not desc and parent then return nil end
-	widget = owner and owner:CreateWidgetByDesc(desc)
-	if parent and widget and not noParent then parent:AddChild(widget) end
+	if not desc then
+		LogInfo("Not found WidgetDesc of ", templateName)
+		return
+	end
+	widget = mainForm:CreateWidgetByDesc(desc)
+	if not widget or not widget:IsValid() then
+		LogInfo("Fail create widget type of ", templateName)
+		return
+	end
+	if parent and not noParent then parent:AddChild(widget) end
 	setName(widget, widgetName)
-	align(widget, alignX, alignY)
-	move(widget, posX, posY)
-	resize(widget, width, height)
+	updatePlacementPlain(widget, alignX, alignY, posX, posY, width, height)
 	return widget
 end
 
@@ -384,7 +446,10 @@ end
 function setCheckBox(widget, value)
 	if not widget or not widget.SetVariant or not widget.GetVariantCount then return end
 	if widget:GetVariantCount()<2 then return end
-	if 		value 	then 	widget:SetVariant(1) return end
+	if 	value then 	
+		widget:SetVariant(1) 
+		return 
+	end
 	widget:SetVariant(0)
 end
 
@@ -515,14 +580,14 @@ end
 -- Locales functions
 --------------------------------------------------------------------------------
 
-local locale=nil
+initTimeAbbr()
 
 function setLocaleTextEx(widget, checked, color, align, fontSize, shadow, outline, fontName)
-	if not locale then
-		locale=getLocale()
+	if not Locales then
+		getLocale()
 	end
 	local name=getName(widget)
-	local text=name and locale[name]
+	local text=name and Locales[name]
 	if not text then
 		text = name
 	end
@@ -531,12 +596,13 @@ function setLocaleTextEx(widget, checked, color, align, fontSize, shadow, outlin
 			text=formatText(text, align)
 			setCheckBox(widget, checked)
 		end
+		
 		setText(widget, text, color, align, fontSize, shadow, outline, fontName)
 	end
 end
 
 function setLocaleText(widget, checked)
-	setLocaleTextEx(widget, checked, "ColorWhite",  "left")
+	setLocaleTextEx(widget, checked, "ColorWhite", "left")
 end
 
 --------------------------------------------------------------------------------
@@ -727,7 +793,7 @@ end
 function ressurect(targetId, ressurectName)
 	local arrNames = {}
 	for i = 1, 4 do
-		local defaultName = getLocale()["defaultRessurectNames"..i]
+		local defaultName = Locales["defaultRessurectNames"..i]
 		if defaultName then
 			table.insert(arrNames, defaultName)
 		end
@@ -868,7 +934,7 @@ end
 
 
 function getTimestamp()
-	return common.GetMsFromDateTime( common.GetLocalDateTime() )
+	return common.GetLocalDateTimeMs()
 end
 
 Global("g_cachedTimestamp", getTimestamp())
@@ -885,6 +951,13 @@ function copyTable(t)
   return result
 end
 
+function deepCopyTable(t)
+	if type( t ) ~= "table" then return t end
+	local c = {}
+	for i, v in pairs( t ) do c[ i ] = deepCopyTable( v ) end
+	return c
+end
+
 local m_spellTextureCache = {}
 function getSpellTextureFromCache(aSpellID)
 	for _, spellTexInfo in pairs(m_spellTextureCache) do
@@ -899,6 +972,7 @@ function getSpellTextureFromCache(aSpellID)
 	
 	return newSpellTexInfo.texture
 end
+
 
 
 function LogToChat(aMessage)
