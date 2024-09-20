@@ -44,6 +44,7 @@ function CreateSubMenu(ClassName)
 			end
 			table.insert( SubMenu, {
 				name = toWString( MenuName ),
+				isDNDEnabled = true,
 				onActivate = function() 
 					SetActiveByIndex(getBuildIndex( build ))
 				end,
@@ -77,7 +78,7 @@ function onShowList( params )
 		menu = CreateSubMenu(nil)
 
 		local desc = mainForm:GetChildChecked( "SaveBuildTemplate", false ):GetWidgetDesc()
-		table.insert( menu, { createWidget = function() return mainForm:CreateWidgetByDesc( desc ) end } )
+		table.insert( menu, { createWidget = function(aParent) return aParent:CreateChildByDesc( desc ) end } )
 
 		local listButton = mainForm:GetChildChecked( "FPSIncreaseButton", false )
 		if listButton:IsVisible() then
@@ -87,7 +88,6 @@ function onShowList( params )
 			ClassMenu = ShowMenu( { x = params and params.x or 0, y = 32 }, menu )
 		end
 
-		RegisterDnd()
 		ClassMenu:GetChildChecked( "BuildNameEdit", true ):SetFocus( true )
 	else
 		HideMainMenu()
@@ -164,7 +164,6 @@ end
 ----------------------------------------------------------------------------------------------------
 -- DnD support
 
-local BaseDndId = 148754878
 local DraggedItem = nil
 local DragFrom = nil
 local DragTo = nil
@@ -173,21 +172,14 @@ function IsDragging()
 	return DraggedItem ~= nil
 end
 
-function RegisterDnd()
-	local children = GetMenuItems()
-	for i, child in ipairs(children) do
-		local nameWidget = child:GetChildUnchecked( "CombinedItem", false )
-		if nameWidget then
-			mission.DNDRegister( nameWidget, BaseDndId + i, true )
-		end
-	end
-end
-
 function OnDndPick( params )
-	if BaseDndId <= params.srcId and params.srcId <= BaseDndId + table.getn(g_addonSetTable) then
-		DraggedItem = params.srcWidget:GetParent()
-
-		local children = GetMenuItems()
+	if not IsMyMenuPicked(params.srcId) then
+		return
+	end
+	DraggedItem = params.srcWidget:GetParent()
+		
+	local children = GetMenuItems()
+	if children then
 		DragFrom = 1
 		while children[DragFrom]:GetInstanceId() ~= DraggedItem:GetInstanceId() do
 			DragFrom = DragFrom + 1
@@ -195,20 +187,22 @@ function OnDndPick( params )
 				return
 			end
 		end
-
 		if RenameBuildIndex then
 			onRenameCancel()
 		end
 
 		common.RegisterEventHandler( OnDndDragTo, "EVENT_DND_DRAG_TO" )
 		common.RegisterEventHandler( OnDndEnd, "EVENT_DND_DROP_ATTEMPT" )
-		common.RegisterEventHandler( OnDndEnd, "EVENT_DND_DRAG_CANCELLED" )
-		mission.DNDConfirmPickAttempt()
+		common.RegisterEventHandler( OnDndCancelled, "EVENT_DND_DRAG_CANCELLED" )
+		DraggedItem:DNDConfirmPickAttempt()
 	end
 end
 
 function OnDndDragTo( params )
-	local posConverter = widgetsSystem:GetPosConverterParams()
+	if not DraggedItem then 
+		return
+	end
+	local posConverter = common.GetPosConverterParams()
 	local cursorY = params.posY * posConverter.fullVirtualSizeY / posConverter.realSizeY
 	local cursorY = cursorY - DraggedItem:GetParent():GetPlacementPlain().posY
 
@@ -243,20 +237,48 @@ function OnDndDragTo( params )
 	end
 end
 
-function OnDndEnd( params )
-	if DragFrom ~= DragTo then
-		table.insert( g_addonSetTable, DragTo, table.remove( g_addonSetTable, DragFrom ) )
-		SaveAddonTable()
+function OnDndCancelled( params )
+	common.UnRegisterEventHandler( OnDndDragTo, "EVENT_DND_DRAG_TO" )
+	common.UnRegisterEventHandler( OnDndEnd, "EVENT_DND_DROP_ATTEMPT" )
+	common.UnRegisterEventHandler( OnDndCancelled, "EVENT_DND_DRAG_CANCELLED" )
+	if DraggedItem then
+		DraggedItem:DNDConfirmDropAttempt()
 	end
-
+	
 	DraggedItem = nil
 	DragFrom = nil
 	DragTo = nil
+end
 
-	common.UnRegisterEventHandler( OnDndDragTo, "EVENT_DND_DRAG_TO" )
-	common.UnRegisterEventHandler( OnDndEnd, "EVENT_DND_DROP_ATTEMPT" )
-	common.UnRegisterEventHandler( OnDndEnd, "EVENT_DND_DRAG_CANCELLED" )
-	mission.DNDConfirmDropAttempt()
+function ApplyChangePosition()
+	local removingItem = table.remove( g_addonSetTable, DragFrom )
+	table.insert( g_addonSetTable, DragTo, removingItem )
+end
+
+function OnDndEnd( params )
+	local backupSettings = table.clone(g_addonSetTable)
+	local someBroken = false
+	if DragFrom ~= nil and DragTo ~= nil 
+		and DragTo <= GetTableSize(g_addonSetTable)
+		and DragFrom > 0 and DragTo > 0
+		and DragFrom ~= DragTo 
+	then
+		if pcall(ApplyChangePosition) then
+			SaveAddonTable()
+		else
+			--был случай когда "залип" одиночный клик и затем как-то при тасканиях потерлись билды
+			--поэтому обернул проверками для сохранения данных
+			someBroken = true
+		end
+	end
+	
+	OnDndCancelled(params)
+	
+	if someBroken then
+		g_addonSetTable = backupSettings
+		onShowList(g_lastAoPanelParams)
+		onShowList(g_lastAoPanelParams)
+	end
 end
 
 ----------------------------------------------------------------------------------------------------

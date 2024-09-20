@@ -71,31 +71,6 @@ function LoadAddonTable()
 	end
 end 
 
-function AddReaction(name, func)
-	if not m_reactions then m_reactions={} end
-	m_reactions[name]=func
-end
-
-function RunReaction(widget)
-	local name=getName(widget)
-	if not name or not m_reactions or not m_reactions[name] then return end
-	m_reactions[name]()
-end
-
-function ButtonPressed(params)
-	RunReaction(params.widget)
-end
-
-function CheckBoxChangedOn(aParams)
-	changeCheckBox(aParams.widget)
-	ButtonPressed(aParams)
-end
-
-function CheckBoxChangedOff(aParams)
-	changeCheckBox(aParams.widget)
-	ButtonPressed(aParams)
-end
-
 function RightClick(params)
 	local name=getName(params.widget)
 	if not name or name ~= "FPSIncreaseButton" then return end
@@ -192,62 +167,6 @@ function ClosePressed()
 	
 end
 
-function GameOptionsPressed()
-	options.Update()
-	local pageIds = options.GetPageIds()
-	for pageIndex = 0, GetTableSize( pageIds ) - 1 do
-		local pageId = pageIds[pageIndex]
-		if pageIndex == 1 or pageIndex == 3 then
-			local groupIds = options.GetGroupIds(pageId)
-			if groupIds then
-				for groupIndex = 0, GetTableSize( groupIds ) - 1 do
-					local groupId = groupIds[groupIndex]
-					local blockIds = options.GetBlockIds( groupId )
-					for blockIndex = 0, GetTableSize( blockIds ) - 1 do
-						local blockId = blockIds[blockIndex]
-						
-						
-						local optionIds = options.GetOptionIds( blockId )
-						for optionIndex = 0, GetTableSize( optionIds ) - 1 do
-							local optionId = optionIds[optionIndex]
-							local optionInfo = options.GetOptionInfo( optionId )
-							
-							--[[
-							
-								выкл	Сглаживание
-								вкл		Низкая детализация поверхности
-								выкл	Тени под персонажами
-								выкл	Процедурные текстуры
-								выкл	Атмосферные эффекты
-								выкл	Пост-эффекты
-								выкл	Эффект свечения
-								выкл	Мягкие частицы
-								
-								вкл		Скрывать боевые сообщения в логе боя
-								вкл		Всегда использовать интерфейс отряда
-							]]--
-							if (pageIndex == 1 
-							and ((blockIndex == 0 and (optionIndex == 1 or optionIndex == 3 or optionIndex == 5 or optionIndex == 6))
-							or (blockIndex == 3 and (optionIndex == 0 or optionIndex == 1 or optionIndex == 2 or optionIndex == 5))))
-							then
-								if optionIndex == 3 then
-									options.SetOptionCurrentIndex( optionId, 1 )
-								else
-									options.SetOptionCurrentIndex( optionId, 0 )							
-								end
-							end
-							if pageIndex == 3 and blockIndex == 0 and (optionIndex == 4 or optionIndex == 1) then 
-								options.SetOptionCurrentIndex( optionId, 1 )
-							end
-						end
-					end
-				end		
-			end
-			options.Apply( pageId )
-		end
-	end
-end
-
 function ShowSettingsWnd(aSetName, anIsUpdate, anUpdateIndex)
 	m_currentSetName = aSetName
 	if anIsUpdate then
@@ -329,8 +248,6 @@ function InitConfigForm()
 	setLocaleTextFPS(createWidget(form, "mediumButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 65))
 	setLocaleTextFPS(createWidget(form, "allButton", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, btnWidth, 25, setBtnPos, 95))
 	
-	--setLocaleTextFPS(createWidget(form, "gameOptions", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 240, 25, setBtnPos+300, 65))
-
 
 	setLocaleTextFPS(createWidget(form, "saveButton1", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 140, 25, 90, 872))
 	setLocaleTextFPS(createWidget(form, "closeBarsButton2", "Button", WIDGET_ALIGN_HIGH, WIDGET_ALIGN_LOW, 140, 25, 270, 872))
@@ -391,7 +308,6 @@ function InitConfigForm()
 
 	AddReaction("saveButton1", SavePressed)
 
-	AddReaction("gameOptions", GameOptionsPressed)
 	AddReaction("selectAll", SelectAll)
 	AddReaction("deseletAll", DeselectAll)
 	return form
