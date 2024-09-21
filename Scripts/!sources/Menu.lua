@@ -133,10 +133,9 @@ function CreateItemWidget( parent, item )
 		SaveAction( combinedItemWdg, item.onActivate )
 		SaveAction( widget:GetChildChecked( "CombinedSubmenu", true ), item.submenu )
 		if item.isDNDEnabled then
-			local id = combinedItemWdg:GetId()
-			DNDWidgets[id] = combinedItemWdg
 			if combinedItemWdg:DNDGetState() == DND_STATE_NOT_REGISTERED then
-				combinedItemWdg:DNDRegister(id, true)
+				local id = combinedItemWdg:DNDRegisterGeneric(true)
+				DNDWidgets[id] = combinedItemWdg
 			end
 		end
 	elseif item.submenu then
