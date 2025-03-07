@@ -9,7 +9,7 @@ local ClassMenu = nil
 
 
 function onSaveBuild( params )
-	local wtEdit = params.widget:GetParent():GetChildChecked( "BuildNameEdit", true )
+	local wtEdit = params.widget:GetParent():GetChildChecked( "BuildNameEdit", false )
 	local text = userMods.FromWString( wtEdit:GetText() )
 
 	if text ~= "" then
@@ -77,7 +77,8 @@ function onShowList( params )
 		
 		menu = CreateSubMenu(nil)
 
-		local desc = mainForm:GetChildChecked( "SaveBuildTemplate", false ):GetWidgetDesc()
+		setTemplateWidget("menu")
+		local desc = getDesc("SaveBuildTemplate")
 		table.insert( menu, { createWidget = function(aParent) return aParent:CreateChildByDesc( desc ) end } )
 
 		local listButton = mainForm:GetChildChecked( "FPSIncreaseButton", false )
@@ -88,7 +89,8 @@ function onShowList( params )
 			ClassMenu = ShowMenu( { x = params and params.x or 0, y = 32 }, menu )
 		end
 
-		ClassMenu:GetChildChecked( "BuildNameEdit", true ):SetFocus( true )
+		
+		ClassMenu:GetChildChecked( "SaveBuildTemplate", false ):GetChildChecked( "BuildNameEdit", false ):SetFocus( true )
 	else
 		HideMainMenu()
 	end
@@ -126,7 +128,7 @@ function onRenameBuild( build )
 	edit:Show( true )
 	edit:Enable( true )
 	edit:SetFocus( true )
-	ClassMenu:GetChildChecked( "BuildNameEdit", true ):SetFocus( false )
+	ClassMenu:GetChildChecked( "SaveBuildTemplate", false ):GetChildChecked( "BuildNameEdit", false ):SetFocus( false )
 end
 
 function onRenameCancel( params )
@@ -137,11 +139,14 @@ function onRenameCancel( params )
 	edit:Show( false )
 	edit:Enable( false )
 
-	ClassMenu:GetChildChecked( "BuildNameEdit", true ):SetFocus( true )
+	ClassMenu:GetChildChecked( "SaveBuildTemplate", false ):GetChildChecked( "BuildNameEdit", false ):SetFocus( true )
 	RenameBuildIndex = nil
 end
 
 function onRenameAccept( params )
+	if not ClassMenu:IsValid() then
+		return
+	end
 	local edit = ClassMenu:GetChildChecked( "ItemEditTemplate", false )
 	g_addonSetTable[ RenameBuildIndex ].name = userMods.FromWString( edit:GetText() )
 	SaveAddonTable()

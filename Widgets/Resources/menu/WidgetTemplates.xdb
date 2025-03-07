@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<UIRelatedWidgets>
+	<items>
+		<Item>
+			<name>MenuTemplate</name>
+			<widget href="Menu/Widgets/MenuTemplate.(WidgetPanel).xdb" />
+		</Item>
+		<Item>
+			<name>ItemTemplate</name>
+			<widget href="Menu/Widgets/ItemTemplate.(WidgetButton).xdb" />
+		</Item>
+		<Item>
+			<name>SubmenuTemplate</name>
+			<widget href="Menu/Widgets/SubmenuTemplate.(WidgetButton).xdb" />
+		</Item>
+		<Item>
+			<name>CombinedTemplate</name>
+			<widget href="Menu/Widgets/CombinedTemplate.(WidgetPanel).xdb" />
+		</Item>
+		<Item>
+			<name>SaveBuildTemplate</name>
+			<widget href="SaveBuildControl/SaveBuildTemplate.(WidgetPanel).xdb" />
+		</Item>
+	</items>
+</UIRelatedWidgets>
+

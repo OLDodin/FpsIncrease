@@ -27,7 +27,17 @@
 			<texts href="Locales/eng/Locale.(UIRelatedTexts).xdb#xpointer(/UIRelatedTexts)"/>
 		</Item>
 	</textsGroups>
-  <visObjects href=""/>
+	<widgetGroups>
+		<Item>
+			<groupName>common</groupName>
+			<widgets href="Widgets/Resources/common/WidgetTemplates.xdb" />
+		</Item>
+		<Item>
+			<groupName>menu</groupName>
+			<widgets href="Widgets/Resources/menu/WidgetTemplates.xdb" />
+		</Item>
+	</widgetGroups>
+	<visObjects href=""/>
  
 <addon_name>FPSIncrease</addon_name>
 </UIAddon>

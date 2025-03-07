@@ -3,9 +3,6 @@
 	<Name>FPSIncreaseMenu</Name>
 	<Priority>10000</Priority>
 	<Children>
-		<Item href="MenuSupport/Menu/Widgets/MenuTemplate.(WidgetPanel).xdb#xpointer(/WidgetPanel)" />
-		<Item href="MenuSupport/SaveBuildControl/SaveBuildTemplate.(WidgetPanel).xdb#xpointer(/WidgetPanel)" />
-		<Item href="Templates/Main.xdb#xpointer(/WidgetPanel)"/>
 	</Children>
 	<BackLayer href="" />
 	<FrontLayer href="" />

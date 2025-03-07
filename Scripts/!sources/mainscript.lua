@@ -1,6 +1,5 @@
 local m_reactions={}
 local m_configForm = nil
-local m_template = nil
 local m_createdCheckBoxes = {}
 local m_currentSetName = ""
 local m_mySetAddons = {}
@@ -168,6 +167,9 @@ function ClosePressed()
 end
 
 function ShowSettingsWnd(aSetName, anIsUpdate, anUpdateIndex)
+	if not m_configForm then
+		m_configForm = InitConfigForm()
+	end
 	m_currentSetName = aSetName
 	if anIsUpdate then
 		m_updateInfo.isNeedUpdate = true
@@ -179,11 +181,11 @@ function ShowSettingsWnd(aSetName, anIsUpdate, anUpdateIndex)
 		m_updateInfo.updateForIndex = 0
 	end
 	setText(m_setHeaderWidget, ConcatWString(getLocale()["setName"], toWString(aSetName)))
-	DnD.ShowWdg(m_configForm)
+	show(m_configForm)
 end
 
 function HideSettingsWnd()
-	DnD.HideWdg(m_configForm)
+	hide(m_configForm)
 	ClosePressed()
 end
 
@@ -229,7 +231,7 @@ function CreateAddonChexbox(aForm, aName, aXShift, aYShift)
 end
 
 function InitConfigForm()
-	setTemplateWidget(m_template)
+	setTemplateWidget("common")
 	local formWidth = 1200
 	local form=createWidget(mainForm, "ConfigForm", "Panel", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, formWidth, 900, 0, 60)
 	priority(form, 5500)
@@ -257,7 +259,7 @@ function InitConfigForm()
 	m_setHeaderWidget = createWidget(form, "saveheader", "TextView", nil, nil, 600, 25, formWidth/2-50, 10)
 
 	local addonsPerColumn = math.ceil(GetTableSize( addons )/5)
-	local scroll = createWidget(form, "container", "ScrollableContainer", nil, nil, formWidth, 720, 4, 144)
+	local scroll = createWidget(form, "container", "ScrollableContainer", nil, nil, formWidth-10, 720, 4, 144)
 	local panel = createWidget(form, "group1", "Panel", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, formWidth-50, addonsPerColumn*20+20, 0, 0)
 	scroll:PushBack(panel)
 	--local str = ""
@@ -346,7 +348,7 @@ function ChangeSelectedAddons()
 end
 
 
-local IsAOPanelEnabled = GetConfig( "EnableAOPanel" ) or GetConfig( "EnableAOPanel" ) == nil
+local IsAOPanelEnabled = true
 
 function onAOPanelStart( params )
 	if IsAOPanelEnabled then
@@ -356,7 +358,7 @@ function onAOPanelStart( params )
 		userMods.SendEvent( "AOPANEL_SEND_ADDON",
 			{ name = common.GetAddonName(), sysName = common.GetAddonName(), param = params } )
 
-		DnD.HideWdg(getChild(mainForm, "FPSIncreaseButton"))
+		hide(getChild(mainForm, "FPSIncreaseButton"))
 	end
 end
 
@@ -384,23 +386,12 @@ function onAOPanelChange( params )
 	end
 end
 
-function enableAOPanelIntegration( enable )
-	IsAOPanelEnabled = enable
-	SetConfig( "EnableAOPanel", enable )
-
-	if enable then
-		onAOPanelStart()
-	else
-		DnD.ShowWdg(getChild(mainForm, "FPSIncreaseButton"))
-	end
-end
 
 
 function Init()
-	m_template = getChild(mainForm, "Template")
-	setTemplateWidget(m_template)
+	setTemplateWidget("common")
 		
-	local button=createWidget(mainForm, "FPSIncreaseButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 100, 25, 300, 20)
+	local button=createWidget(mainForm, "FPSIncreaseButton", "Button", WIDGET_ALIGN_LOW, WIDGET_ALIGN_LOW, 100, 32, 300, 20)
 	setText(button, "Boost off")
 	DnD.Init(button, button, true)
 	
@@ -413,7 +404,7 @@ function Init()
 	common.RegisterEventHandler( onAOPanelRightClick, "AOPANEL_BUTTON_RIGHT_CLICK" )
 	common.RegisterEventHandler( onAOPanelChange, "EVENT_ADDON_LOAD_STATE_CHANGED" )
 	
-	m_configForm = InitConfigForm()
+	
 	
 	AddReaction("FPSIncreaseButton", function () onShowList() end)
 	
