@@ -77,8 +77,7 @@ function onShowList( params )
 		
 		menu = CreateSubMenu(nil)
 
-		setTemplateWidget("menu")
-		local desc = getDesc("SaveBuildTemplate")
+		local desc = GetWdgDesc("SaveBuildTemplate")
 		table.insert( menu, { createWidget = function(aParent) return aParent:CreateChildByDesc( desc ) end } )
 
 		local listButton = mainForm:GetChildChecked( "FPSIncreaseButton", false )

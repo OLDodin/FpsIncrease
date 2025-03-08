@@ -25,12 +25,17 @@ local Actions = {} -- maps widget to action executed upon clicking it
 
 local DNDWidgets = {}
 
+local addonRelatedWidgetGroup = common.GetAddonRelatedWidgetGroup("menu")
+function GetWdgDesc(aName)
+	return addonRelatedWidgetGroup:GetWidget(aName)
+end
+
 -- templates for creating menu parts
-setTemplateWidget("menu")
-local MenuTemplate = getDesc("MenuTemplate")
-local ItemTemplate = getDesc("ItemTemplate")
-local SubmenuTemplate = getDesc("SubmenuTemplate")
-local CombinedTemplate = getDesc("CombinedTemplate")
+local MenuTemplate = GetWdgDesc("MenuTemplate")
+local ItemTemplate = GetWdgDesc("ItemTemplate")
+local SubmenuTemplate = GetWdgDesc("SubmenuTemplate")
+local CombinedTemplate = GetWdgDesc("CombinedTemplate")
+
 
 function ShowMenu( screenPosition, menu, parent, isSubMenu )
 	local menuWidget = mainForm:CreateChildByDesc( MenuTemplate )
