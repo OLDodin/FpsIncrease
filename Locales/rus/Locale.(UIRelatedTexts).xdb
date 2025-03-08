@@ -705,5 +705,13 @@
       <name>ZoneAnnounce</name>
       <resource href="ZoneAnnounce.txt"/>
     </Item>
+	<Item>
+      <name>saveLocal</name>
+      <resource href="saveLocal.txt"/>
+    </Item>
+	<Item>
+      <name>saveGlobal</name>
+      <resource href="saveGlobal.txt"/>
+    </Item>
   </items>
 </UIRelatedTexts>

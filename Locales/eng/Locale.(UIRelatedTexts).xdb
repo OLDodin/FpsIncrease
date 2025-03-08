@@ -89,5 +89,13 @@
       <name>update</name>
       <resource href="update.txt"/>
     </Item>
+	<Item>
+      <name>saveLocal</name>
+      <resource href="saveLocal.txt"/>
+    </Item>
+	<Item>
+      <name>saveGlobal</name>
+      <resource href="saveGlobal.txt"/>
+    </Item>
   </items>
 </UIRelatedTexts>

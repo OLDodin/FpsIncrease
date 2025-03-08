@@ -8,6 +8,7 @@ local m_updateInfo = {}
 m_updateInfo.isNeedUpdate = false
 m_updateInfo.updateForIndex = 0
 local m_setHeaderWidget = nil
+local IsBtnInAOPanelNow = false
 
 function setLocaleTextWithColor(widget, aColor)
 	setLocaleTextEx(widget, nil, aColor)
@@ -17,17 +18,40 @@ function setLocaleTextFPS(widget, aFontSize, checked)
 	setLocaleTextEx(widget, checked, "ColorWhite",  "left", aFontSize)
 end
 
+function IsSaveGlobal()
+	local saveGlobal = userMods.GetGlobalConfigSection("FpsIncrease_use_global")
+	
+	return saveGlobal and saveGlobal.value
+end
+
+function SetSaveGlobal(aValue)
+	if aValue then
+		LogToChat(getLocale()["saveGlobal"])
+	else
+		LogToChat(getLocale()["saveLocal"])
+	end
+	userMods.SetGlobalConfigSection( "FpsIncrease_use_global", { value = aValue } )
+end
+
 function SaveAddonTable()
 	local savedData = {}
 	savedData["selectedIndex"] = m_mySetAddons.index
 	savedData["savedsets"] = g_addonSetTable
 	savedData["dataVersion"] = "3.0"
-	
-	userMods.SetAvatarConfigSection( "AddonBuilds", savedData )
+	if (IsSaveGlobal()) then 
+		userMods.SetGlobalConfigSection( "AddonBuilds", savedData )
+	else
+		userMods.SetAvatarConfigSection( "AddonBuilds", savedData )
+	end
 end
 
 function LoadAddonTable()
-	local savedData = userMods.GetAvatarConfigSection( "AddonBuilds" )
+	local savedData = nil
+	if (IsSaveGlobal()) then 
+		savedData = userMods.GetGlobalConfigSection( "AddonBuilds" )
+	else
+		savedData = userMods.GetAvatarConfigSection( "AddonBuilds" )
+	end
 	
 	if not savedData then
 	elseif not savedData["dataVersion"] then
@@ -359,6 +383,7 @@ function onAOPanelStart( params )
 			{ name = common.GetAddonName(), sysName = common.GetAddonName(), param = params } )
 
 		hide(getChild(mainForm, "FPSIncreaseButton"))
+		IsBtnInAOPanelNow = true
 	end
 end
 
@@ -383,9 +408,32 @@ end
 function onAOPanelChange( params )
 	if params.unloading and string.find(params.name, "AOPanel") then
 		DnD.ShowWdg(getChild(mainForm, "FPSIncreaseButton"))
+		IsBtnInAOPanelNow = false
 	end
 end
 
+
+local function OnSlashCommand(aParams)
+	local text = userMods.FromWString(aParams.text)
+	if text == "/fpssaveglobal" or text == "\\fpssaveglobal" then
+		SetSaveGlobal(true)
+		common.StateUnloadManagedAddon( "UserAddon/FpsIncrease" )
+		common.StateLoadManagedAddon( "UserAddon/FpsIncrease" )
+	end
+	if text == "/fpssaveavatar" or text == "\\fpssaveavatar" then
+		SetSaveGlobal(false)
+		common.StateUnloadManagedAddon( "UserAddon/FpsIncrease" )
+		common.StateLoadManagedAddon( "UserAddon/FpsIncrease" )
+	end
+end
+
+local function onInterfaceToggle(aParams)
+	if aParams.toggleTarget == ENUM_InterfaceToggle_Target_All then
+		if not IsBtnInAOPanelNow then
+			ListButton:Show( not aParams.hide )
+		end
+	end
+end
 
 
 function Init()
@@ -404,7 +452,8 @@ function Init()
 	common.RegisterEventHandler( onAOPanelRightClick, "AOPANEL_BUTTON_RIGHT_CLICK" )
 	common.RegisterEventHandler( onAOPanelChange, "EVENT_ADDON_LOAD_STATE_CHANGED" )
 	
-	
+	common.RegisterEventHandler( onInterfaceToggle, "EVENT_INTERFACE_TOGGLE" )
+	common.RegisterEventHandler( OnSlashCommand, "EVENT_UNKNOWN_SLASH_COMMAND" )
 	
 	AddReaction("FPSIncreaseButton", function () onShowList() end)
 	
