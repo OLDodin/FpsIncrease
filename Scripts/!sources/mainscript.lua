@@ -262,9 +262,6 @@ function InitConfigForm()
 	hide(form)
 	
 	local addons = common.GetStateManagedAddons()
-	if addons[0] then
-		table.insert(addons, 0, {})
-	end
 	table.sort(addons, CompareByString) --sorting with [1] position
 	
 	local btnWidth = 220
@@ -357,15 +354,10 @@ function ChangeSelectedAddons()
 		end
 	end
 	
-
-	local addons = common.GetStateManagedAddons()
-
-	for i = 0, GetTableSize( addons ) do
-		local info = addons[i]
-		if info and string.find(info.name, "AOPanel") then
-			if info.isLoaded then
-				common.StateUnloadManagedAddon( info.name )
-				common.StateLoadManagedAddon( info.name )
+	for _, info in ipairs(common.GetStateManagedAddons()) do
+		if info and info.name == "UserAddon/AOPanel" then
+			if info.state == ADDON_STATE_LOADED then
+				common.StateReloadManagedAddon(info.name)
 			end
 		end
 	end
@@ -417,13 +409,11 @@ local function OnSlashCommand(aParams)
 	local text = userMods.FromWString(aParams.text)
 	if text == "/fpssaveglobal" or text == "\\fpssaveglobal" then
 		SetSaveGlobal(true)
-		common.StateUnloadManagedAddon( "UserAddon/FpsIncrease" )
-		common.StateLoadManagedAddon( "UserAddon/FpsIncrease" )
+		common.StateReloadManagedAddon(common.GetAddonSysName())
 	end
 	if text == "/fpssaveavatar" or text == "\\fpssaveavatar" then
 		SetSaveGlobal(false)
-		common.StateUnloadManagedAddon( "UserAddon/FpsIncrease" )
-		common.StateLoadManagedAddon( "UserAddon/FpsIncrease" )
+		common.StateReloadManagedAddon(common.GetAddonSysName())
 	end
 end
 
