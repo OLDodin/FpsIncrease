@@ -346,19 +346,20 @@ function ChangeSelectedAddons()
 	else
 		setText(getChild(mainForm, "FPSIncreaseButton"), "Boost off")
 	end
+	
+	for _, info in ipairs(common.GetStateManagedAddons()) do
+		if info and  string.find(info.name, "AOPanel") then
+			if info.state == ADDON_STATE_LOADED then
+				common.StateReloadManagedAddon(info.name)
+			end
+		end
+	end
+	
 	for name, v in pairs( m_mySetAddons.set.flags ) do
 		if m_unloadedNow then
 			common.StateUnloadManagedAddon( name )
 		else
 			common.StateLoadManagedAddon( name )
-		end
-	end
-	
-	for _, info in ipairs(common.GetStateManagedAddons()) do
-		if info and info.name == "UserAddon/AOPanel" then
-			if info.state == ADDON_STATE_LOADED then
-				common.StateReloadManagedAddon(info.name)
-			end
 		end
 	end
 end
