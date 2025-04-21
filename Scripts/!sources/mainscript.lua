@@ -346,15 +346,7 @@ function ChangeSelectedAddons()
 	else
 		setText(getChild(mainForm, "FPSIncreaseButton"), "Boost off")
 	end
-	
-	for _, info in ipairs(common.GetStateManagedAddons()) do
-		if info and  string.find(info.name, "AOPanel") then
-			if info.state == ADDON_STATE_LOADED then
-				common.StateReloadManagedAddon(info.name)
-			end
-		end
-	end
-	
+
 	for name, v in pairs( m_mySetAddons.set.flags ) do
 		if m_unloadedNow then
 			common.StateUnloadManagedAddon( name )
@@ -391,7 +383,7 @@ end
 
 function onAOPanelRightClick( params )
 	if params.sender == common.GetAddonName() then
-		local SetVal = { val = userMods.ToWString( m_unloadedNow and "Boost ON" or "Boost off" )}
+		local SetVal = { val = userMods.ToWString( m_unloadedNow and "Boost off" or "Boost ON" )}
 		userMods.SendEvent( "AOPANEL_UPDATE_ADDON", { sysName = common.GetAddonName(), header = SetVal } )
 		ChangeSelectedAddons()
 	end
