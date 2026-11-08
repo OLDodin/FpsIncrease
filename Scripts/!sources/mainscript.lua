@@ -159,6 +159,10 @@ function SavePressed()
 		
 		setAddons.name = m_currentSetName
 		table.insert( g_addonSetTable, setAddons )
+		
+		if m_mySetAddons.index == nil then
+			SetActiveByIndex(1)
+		end
 	end
 
 	SaveAddonTable()
@@ -364,7 +368,7 @@ function onAOPanelStart( params )
 	
 		local SetVal = { val = userMods.ToWString( m_unloadedNow and "Boost ON" or "Boost off" ) }
 		local params = { header = SetVal, ptype = "button", size = 85 }
-		userMods.SendEvent( "AOPANEL_SEND_ADDON",
+		common.SendEvent( "AOPANEL_SEND_ADDON",
 			{ name = common.GetAddonName(), sysName = common.GetAddonName(), param = params } )
 
 		hide(getChild(mainForm, "FPSIncreaseButton"))
@@ -384,7 +388,7 @@ end
 function onAOPanelRightClick( params )
 	if params.sender == common.GetAddonName() then
 		local SetVal = { val = userMods.ToWString( m_unloadedNow and "Boost off" or "Boost ON" )}
-		userMods.SendEvent( "AOPANEL_UPDATE_ADDON", { sysName = common.GetAddonName(), header = SetVal } )
+		common.SendEvent( "AOPANEL_UPDATE_ADDON", { sysName = common.GetAddonName(), header = SetVal } )
 		ChangeSelectedAddons()
 	end
 	

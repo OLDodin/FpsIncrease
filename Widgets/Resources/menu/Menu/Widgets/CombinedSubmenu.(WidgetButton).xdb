@@ -22,4 +22,4 @@
 		</Item>
 	</Variants>
 	<reactionOnPointing>SubmenuMouseOverReaction</reactionOnPointing>
-</WidgetPanel>
+</WidgetButton>
